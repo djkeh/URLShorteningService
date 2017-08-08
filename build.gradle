@@ -32,6 +32,8 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-cache')
 	compile('org.springframework.boot:spring-boot-starter-hateoas')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.thymeleaf:thymeleaf:3.0.7.RELEASE')
+	compile('org.thymeleaf:thymeleaf-spring4:3.0.7.RELEASE')
 	runtime('org.springframework.boot:spring-boot-devtools')
 	compileOnly('org.springframework.boot:spring-boot-configuration-processor')
 	compileOnly('org.projectlombok:lombok')
