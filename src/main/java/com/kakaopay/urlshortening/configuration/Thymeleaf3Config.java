@@ -20,9 +20,11 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
+
 /**
  * <p>
- *   Custom {@link EnableAutoConfiguration Auto-configuration} for Thymeleaf 3.<br>
+ * Custom {@link EnableAutoConfiguration Auto-configuration} for Thymeleaf
+ * 3.<br>
  * </p>
  *
  * @author Uno Kim
@@ -72,12 +74,12 @@ public class Thymeleaf3Config implements ApplicationContextAware {
         resolver.setSuffix(this.properties.getSuffix());
         resolver.setTemplateMode(this.properties.getMode());
         resolver.setUseDecoupledLogic(this.properties.isDecoupledLogic());
-        if(this.properties.getEncoding() != null) {
+        if (this.properties.getEncoding() != null) {
             resolver.setCharacterEncoding(this.properties.getEncoding().name());
         }
         resolver.setCacheable(this.properties.isCache());
         Integer order = this.properties.getTemplateResolverOrder();
-        if(order != null) {
+        if (order != null) {
             resolver.setOrder(order);
         }
 
@@ -96,8 +98,8 @@ public class Thymeleaf3Config implements ApplicationContextAware {
     public class Thymeleaf3Properties extends ThymeleafProperties {
 
         /**
-         * Template mode to be applied to templates. Default value is
-         * {@code HTML} from Thymeleaf 3.
+         * Template mode to be applied to templates. Default value is {@code HTML} from
+         * Thymeleaf 3.
          */
         private String mode = TemplateMode.HTML.name();
 
