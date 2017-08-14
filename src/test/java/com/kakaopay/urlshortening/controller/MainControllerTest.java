@@ -35,6 +35,11 @@ public class MainControllerTest {
         testShortenedURL = "http://kakao.pay/test_URL";
     }
     
+    /**
+     * Getting into the main page returns one constant page with the specific message: {@code navbarBrand}
+     * 
+     * @throws Exception
+     */
     @Test
     public void testMain() throws Exception {
         // Given
