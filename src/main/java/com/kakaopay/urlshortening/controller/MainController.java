@@ -21,21 +21,21 @@ public class MainController {
             Model model
             ) {
         if(isShortenedURL(url)) {
-            String redirectURL = getFullURL(url);
+            String redirectURL = restoreURL(url);
             return "redirect:" + redirectURL;
         }
         
-        model.addAttribute("url", getShortenedURL(url));
+        model.addAttribute("url", shortenURL(url));
         
         return "index";
     }
 
-    private String getShortenedURL(String url) {
+    private String shortenURL(String url) {
         if(url.equals("http://test-url.com/")) return "http://kakao.pay/test_URL";
         return url;
     }
 
-    private String getFullURL(String url) {
+    private String restoreURL(String url) {
         if(url == null) return null;
         if(url.equals("http://kakao.pay/test_URL")) return "http://test-url.com/";
         else return url;
