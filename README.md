@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/djkeh/URLShorteningService.svg?branch=master)](https://travis-ci.org/djkeh/URLShorteningService)
+
 URL Shortening Service Demo
 ======
 
