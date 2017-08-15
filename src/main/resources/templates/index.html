@@ -19,28 +19,40 @@
   <link href="/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
   
   <link href="/css/main.css" rel="stylesheet">
+  
 </head>
 <body>
 
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">URL Shortening Sevice Demo</a>
+      <a class="navbar-brand" id="th-navbar-brand" href="/">Brand Logo</a>
     </div>
   </nav>
   
   <div class="container">
-    <form>
+  
+    <form method="post">
       <div class="form-group">
         <label for="url-input">URL input</label>
         <input type="text" class="form-control" id="url-input" placeholder="URL (ex: http://tech.kakao.com/)">
       </div>
       <button type="submit" class="btn btn-default">Submit</button>
     </form>
+    
+    <div class="row" id="th-shortened-url">
+      <div class="col-md-2">
+        <h4>Shortened URL:</h4>
+      </div>
+      <div class="col-md-10">
+        <div class="well"></div>
+      </div>
+    </div>
+    
   </div> <!-- /container -->
   
   <footer>
     <hr>
-    <p>Uno Kim (djkehh@gmail.com)</p>
+    <p id="th-contact">Contact Info.</p>
   </footer>
 
 

@@ -29,7 +29,7 @@ public class MainControllerTest {
     
     @Before
     public void setUp() throws Exception {
-        navbarBrand = "URL Shortening Sevice Demo";
+        navbarBrand = "URL Shortening Sevice : Demo";
         paramURL = "url";
         testURL = "http://test-url.com/";
         testShortenedURL = "http://kakao.pay/test_URL";
