@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<thlogic>
+<!--
+  <attr sel="#th-shortened-url" th:if="${url}">
+    <attr sel="/div[1]">
+      <attr sel="/.well" th:text="${url}" />
+    </attr>
+  </attr>
+  <attr sel="#th-contact" th:text="'Uno Kim (djkehh@gmail.com)'" />
+-->
+</thlogic>
