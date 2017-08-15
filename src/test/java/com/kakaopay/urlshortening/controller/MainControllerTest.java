@@ -64,6 +64,7 @@ public class MainControllerTest {
         mockMvc.perform(post("/").param(paramURL, testURL))
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(content().string(containsString(navbarBrand)))
                 .andExpect(content().string(containsString(testShortenedURL)));
     }
     
@@ -79,7 +80,7 @@ public class MainControllerTest {
         // When & Then
         mockMvc.perform(post("/").param(paramURL, testShortenedURL))
                 .andDo(print())
-                .andExpect(status().isMovedPermanently());
+                .andExpect(status().isFound());
     }
 
 }

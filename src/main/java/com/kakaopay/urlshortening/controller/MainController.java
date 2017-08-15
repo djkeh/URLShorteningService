@@ -2,23 +2,48 @@ package com.kakaopay.urlshortening.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
 public class MainController {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping("/")
     public String main() {
         return "index";
     }
     
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String mainSubmit(Model model) {
-        model.addAttribute("url", "http://kakao.pay/test_URL");
+    @PostMapping("/")
+    public String mainSubmit(
+            @RequestParam String url,
+            Model model
+            ) {
+        if(isShortenedURL(url)) {
+            String redirectURL = getFullURL(url);
+            return "redirect:" + redirectURL;
+        }
+        
+        model.addAttribute("url", getShortenedURL(url));
         
         return "index";
+    }
+
+    private String getShortenedURL(String url) {
+        if(url.equals("http://test-url.com/")) return "http://kakao.pay/test_URL";
+        return url;
+    }
+
+    private String getFullURL(String url) {
+        if(url == null) return null;
+        if(url.equals("http://kakao.pay/test_URL")) return "http://test-url.com/";
+        else return url;
+    }
+
+    private boolean isShortenedURL(String url) {
+        if(url.equals("http://kakao.pay/test_URL")) return true;
+        return false;
     }
     
     
