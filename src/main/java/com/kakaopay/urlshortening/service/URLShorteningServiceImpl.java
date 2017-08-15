@@ -18,7 +18,7 @@ public class URLShorteningServiceImpl implements URLShorteningService {
     }
 
     @Override
-    public boolean isSHortenedURL(String url) {
+    public boolean isShortenedURL(String url) {
         // TODO Auto-generated method stub
         return false;
     }

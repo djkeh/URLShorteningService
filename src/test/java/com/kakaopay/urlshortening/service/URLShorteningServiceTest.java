@@ -51,7 +51,7 @@ public class URLShorteningServiceTest {
         String url = "http://kakao.pay/test_URL";
         
         // When & Then
-        assertThat(urlShorteningService.isSHortenedURL(url), is(true));
+        assertThat(urlShorteningService.isShortenedURL(url), is(true));
     }
 
 }
