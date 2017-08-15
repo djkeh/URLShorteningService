@@ -36,7 +36,7 @@ public class MainControllerTest {
     }
     
     /**
-     * Getting into the main page returns one constant page with the specific message: {@code navbarBrand}
+     * Getting into the main page returns one constant page with the specific string.
      * 
      * @throws Exception
      */
