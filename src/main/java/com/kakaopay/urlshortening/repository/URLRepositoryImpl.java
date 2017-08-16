@@ -20,7 +20,7 @@ public class URLRepositoryImpl implements URLRepository {
     }
 
     @Override
-    public boolean putURL(String url, String shortURL) {
+    public boolean putURL(String shortURL, String url) {
         return map.putIfAbsent(shortURL, url) == null ? true : false;
     }
 

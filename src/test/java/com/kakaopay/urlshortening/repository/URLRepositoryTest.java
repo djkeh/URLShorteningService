@@ -29,7 +29,7 @@ public class URLRepositoryTest {
     @Test
     public void testGetUrl() throws Exception {
         // Given
-        urlRepository.putURL(testURL, testShortURL);
+        urlRepository.putURL(testShortURL, testURL);
         
         // When
         String actualURL = urlRepository.getURL(testShortURL);
@@ -45,7 +45,7 @@ public class URLRepositoryTest {
         int count = urlRepository.size();
         
         // When
-        boolean putResult = urlRepository.putURL(testURL, testShortURL);
+        boolean putResult = urlRepository.putURL(testShortURL, testURL);
         
         // Then
         assertThat(putResult, is(true));
@@ -55,7 +55,7 @@ public class URLRepositoryTest {
     @Test
     public void testRemoveURL() throws Exception {
         // Given
-        urlRepository.putURL(testURL, testShortURL);
+        urlRepository.putURL(testShortURL, testURL);
         int size = urlRepository.size();
         
         // When
