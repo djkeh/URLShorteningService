@@ -29,39 +29,40 @@ public class URLRepositoryTest {
     @Test
     public void testGetUrl() throws Exception {
         // Given
-        boolean result = urlRepository.putURL(testURL, testShortURL);
+        urlRepository.putURL(testURL, testShortURL);
         
         // When
         String actualURL = urlRepository.getURL(testShortURL);
         
         // Then
-        assertThat(result, is(true));
         assertThat(actualURL, is(testURL));
     }
     
     @Test
     public void testPutUrl() throws Exception {
         // Given
+        urlRepository.init();
         int count = urlRepository.size();
         
         // When
-        boolean result = urlRepository.putURL(testURL, testShortURL);
+        boolean putResult = urlRepository.putURL(testURL, testShortURL);
         
         // Then
+        assertThat(putResult, is(true));
         assertThat(urlRepository.size(), is(count + 1));
-        assertThat(result, is(true));
     }
 
     @Test
     public void testRemoveURL() throws Exception {
         // Given
+        urlRepository.putURL(testURL, testShortURL);
         int size = urlRepository.size();
         
         // When
-        boolean result = urlRepository.removeURL(testShortURL);
+        boolean removeResult = urlRepository.removeURL(testShortURL);
         
         // Then
-        assertThat(result, is(true));
+        assertThat(removeResult, is(true));
         assertThat(urlRepository.getURL(testShortURL), is(""));
         assertThat(urlRepository.size(), is(size - 1));
     }
@@ -71,10 +72,9 @@ public class URLRepositoryTest {
         // Given
         
         // When
-        boolean result = urlRepository.init();
+        urlRepository.init();
         
         // Then
-        assertThat(result, is(true));
         assertThat(urlRepository.size(), is(0));
         
     }
