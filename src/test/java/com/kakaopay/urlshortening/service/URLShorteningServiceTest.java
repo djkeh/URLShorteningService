@@ -58,7 +58,7 @@ public class URLShorteningServiceTest {
         String httpsResult = urlShorteningService.shortenURL(httpsURL);
         
         // Then
-        assertThat(emptyResult, is(emptyURL));
+        assertThat(emptyResult, is(""));
         
         assertThat(spacesResult.startsWith(prefix), is(true));
         assertThat(spacesResult.substring(prefix.length()).length(), is(8));
@@ -84,6 +84,20 @@ public class URLShorteningServiceTest {
         
         // Then
         assertThat(result, is(url));
+    }
+    
+    @Test
+    public void inputInvalidShortURLIntoRestoreURL() throws Exception {
+        // Given
+        String expectedShortURL = urlShorteningService.shortenURL(url);
+        
+        // When
+        String untrimmedResult = urlShorteningService.restoreURL(" " + expectedShortURL);
+        String badResult = urlShorteningService.restoreURL("bad shortURL");
+        
+        // Then
+        assertThat(untrimmedResult, is(url));
+        assertThat(badResult, is(""));
     }
     
     @Test
