@@ -49,11 +49,13 @@ public class URLShorteningServiceTest {
         String emptyURL = "  ";
         String spacesAroundURL = " http://kakaocorp.com/";
         String noSchemeURL = "kakaocorp.com";
+        String httpsURL = "https://kakaocorp.com/";
         
         // When
         String emptyResult = urlShorteningService.shortenURL(emptyURL);
         String spacesResult = urlShorteningService.shortenURL(spacesAroundURL);
         String noSchemeResult = urlShorteningService.shortenURL(noSchemeURL);
+        String httpsResult = urlShorteningService.shortenURL(httpsURL);
         
         // Then
         assertThat(emptyResult, is(emptyURL));
@@ -65,6 +67,10 @@ public class URLShorteningServiceTest {
         assertThat(noSchemeResult.startsWith(prefix), is(true));
         assertThat(noSchemeResult.substring(prefix.length()).length(), is(8));
         assertThat(urlShorteningService.restoreURL(noSchemeResult), is("http://" + noSchemeURL));
+        
+        assertThat(httpsResult.startsWith(prefix), is(true));
+        assertThat(httpsResult.substring(prefix.length()).length(), is(8));
+        assertThat(urlShorteningService.restoreURL(httpsResult), is("https://" + noSchemeURL));
         
     }
     
