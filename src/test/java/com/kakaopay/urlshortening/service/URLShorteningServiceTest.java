@@ -45,11 +45,13 @@ public class URLShorteningServiceTest {
         when(urlRepository.putURL(anyString(), eq(url))).thenReturn(true);
         
         // When
-        String result = urlShorteningService.shortenURL(url);
+        String result1 = urlShorteningService.shortenURL(url);
+        String result2 = urlShorteningService.shortenURL(url);
         
         // Then
-        assertThat(result, containsString(prefix));
-        assertThat(result.substring(prefix.length()).length(), is(8));
+        assertThat(result1, containsString(prefix));
+        assertThat(result1.substring(prefix.length()).length(), is(8));
+        assertThat(result2, is(result1));
     }
     
     @Test
