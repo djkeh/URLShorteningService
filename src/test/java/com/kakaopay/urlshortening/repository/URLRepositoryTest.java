@@ -107,20 +107,33 @@ public class URLRepositoryTest {
     @Test
     public void testHasShortenedURL() throws Exception {
         // Given
+        urlRepository.putURL(testShortURL, testURL);
         
         // When
+        boolean result1 = urlRepository.hasShortenedURL(testShortURL);
+        boolean result2 = urlRepository.hasShortenedURL("false test");
         
         // Then
+        assertThat(result1, is(true));
+        assertThat(result2, is(false));
         
     }
 
     @Test
     public void testIsFull() throws Exception {
         // Given
+        /*
+        // TODO: This is crazy! 
+        for (int i = 0; i < Integer.MAX_VALUE; ++i) {
+            urlRepository.putURL("dummy" + i, "dummy");
+        }
+        */
         
         // When
+        boolean result = urlRepository.isFull();
         
         // Then
-        
+        //assertThat(result, is(true));
+        assertThat(result, is(false));
     }
 }
