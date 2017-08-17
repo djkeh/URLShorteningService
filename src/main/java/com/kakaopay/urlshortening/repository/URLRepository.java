@@ -6,7 +6,7 @@ public interface URLRepository {
      * Retrieves full URL with the shortened URL input. 
      * 
      * @param shortURL a shortened URL input
-     * @return the matching full URL, or an empty String if there isn't such shortened URL stored in the repository.
+     * @return the matching full URL, or an empty String("") if there isn't such shortened URL stored in the repository.
      */
     String getURL(String shortURL);
     
@@ -14,7 +14,7 @@ public interface URLRepository {
      * Retrieves shortened URL with the full URL input. 
      * 
      * @param url a full URL input
-     * @return the matching shortened URL, or an empty String if there isn't such full URL stored in the repository.
+     * @return the matching shortened URL, or an empty String("") if there isn't such full URL stored in the repository.
      */
     String getShortURL(String url);
     

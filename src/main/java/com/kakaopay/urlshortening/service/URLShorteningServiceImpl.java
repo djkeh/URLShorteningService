@@ -29,7 +29,7 @@ public class URLShorteningServiceImpl implements URLShorteningService {
     @Override
     public String shortenURL(String url) {
         if (urlRepository.isFull() || StringUtils.isBlank(url)) {
-            return url;
+            return "";
         }
         
         url = url.trim();
@@ -59,13 +59,14 @@ public class URLShorteningServiceImpl implements URLShorteningService {
     @Override
     public String restoreURL(String shortURL) {
         if(urlRepository.isEmpty() || StringUtils.isBlank(shortURL)) {
-            return shortURL;
+            return "";
         }
         
+        shortURL = shortURL.trim();
         String url = urlRepository.getURL(shortURL);
         logger.debug("[Restored URL ({})] {}", shortURL, url);
         
-        return url.equals("") ? shortURL : url;
+        return url;
     }
 
     @Override
