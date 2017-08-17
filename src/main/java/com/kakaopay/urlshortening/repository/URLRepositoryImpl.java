@@ -2,6 +2,7 @@ package com.kakaopay.urlshortening.repository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,20 @@ public class URLRepositoryImpl implements URLRepository {
     @Override
     public String getURL(String shortURL) {
         return map.getOrDefault(shortURL, "");
+    }
+
+    @Override
+    public String getShortURL(String url) {
+        String shortURL = "";
+        
+        for (Entry<String, String> entry : map.entrySet()) {
+            if (entry.getValue().equals(url)) {
+                shortURL = entry.getKey();
+                break;
+             }
+        }
+        
+        return shortURL;
     }
 
     @Override
@@ -37,6 +52,11 @@ public class URLRepositoryImpl implements URLRepository {
     @Override
     public boolean hasShortenedURL(String shortURL) {
         return map.containsKey(shortURL);
+    }
+    
+    @Override
+    public boolean hasURL(String url) {
+        return map.containsValue(url);
     }
 
     @Override

@@ -30,6 +30,7 @@ public class URLRepositoryTest {
     @Test
     public void testGetUrl() throws Exception {
         // Given
+        urlRepository.init();
         urlRepository.putURL(testShortURL, testURL);
         
         // When
@@ -37,6 +38,19 @@ public class URLRepositoryTest {
         
         // Then
         assertThat(actualURL, is(testURL));
+    }
+    
+    @Test
+    public void testGetShortURL() throws Exception {
+        // Given
+        urlRepository.init();
+        urlRepository.putURL(testShortURL, testURL);
+        
+        // When
+        String acturlShortURL = urlRepository.getShortURL(testURL);
+        
+        // Then
+        assertThat(acturlShortURL, is(testShortURL));
     }
     
     @Test
@@ -117,6 +131,18 @@ public class URLRepositoryTest {
         assertThat(result1, is(true));
         assertThat(result2, is(false));
         
+    }
+    
+    @Test
+    public void testHasURL() throws Exception {
+        // Given
+        urlRepository.putURL(testShortURL, testURL);
+        
+        // When
+        boolean result = urlRepository.hasURL(testURL);
+        
+        // Then
+        assertThat(result, is(true));
     }
 
     @Test

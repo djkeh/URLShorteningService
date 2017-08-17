@@ -1,6 +1,5 @@
 package com.kakaopay.urlshortening.service;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.slf4j.Logger;
@@ -30,8 +29,13 @@ public class URLShorteningServiceImpl implements URLShorteningService {
             return url;
         }
         
+        if (urlRepository.hasURL(url)) {
+            return urlRepository.getShortURL(url);
+        }
+        
         long index;
         String shortURL;
+        
         
         do {
             index = indexGenerator();
@@ -39,6 +43,7 @@ public class URLShorteningServiceImpl implements URLShorteningService {
         } while(urlRepository.hasShortenedURL(shortURL) && !urlRepository.isFull());
         
         urlRepository.putURL(shortURL, url);
+        logger.debug("[Shortened URL ({})] {}", url, shortURL);
         
         return shortURL;
     }
@@ -50,6 +55,7 @@ public class URLShorteningServiceImpl implements URLShorteningService {
         }
         
         String url = urlRepository.getURL(shortURL);
+        logger.debug("[Restored URL ({})] {}", shortURL, url);
         
         return url.equals("") ? shortURL : url;
     }
@@ -65,7 +71,7 @@ public class URLShorteningServiceImpl implements URLShorteningService {
         // Generates index number between Base64 code "10000000" ~ "ZZZZZZZZ"
         // This can generate up to 214818490978688 index numbers.
         index = ThreadLocalRandom.current().nextLong(3521614606208L, 218340105584895L);
-        logger.debug("Generated ID: {}", index);
+        logger.debug("[Generated ID] {}", index);
         
         return index;
     }

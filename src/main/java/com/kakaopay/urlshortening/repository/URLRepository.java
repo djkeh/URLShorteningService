@@ -11,6 +11,14 @@ public interface URLRepository {
     String getURL(String shortURL);
     
     /**
+     * Retrieves shortened URL with the full URL input. 
+     * 
+     * @param url a full URL input
+     * @return the matching shortened URL, or an empty String if there isn't such full URL stored in the repository.
+     */
+    String getShortURL(String url);
+    
+    /**
      * Adds Shortened URL / URL in key / value pair to the URL repository.
      * 
      * @param shortURL a shortened URL as key
@@ -39,6 +47,14 @@ public interface URLRepository {
      * @return true if exists
      */
     boolean hasShortenedURL(String shortURL);
+    
+    /**
+     * Checks if the repository already has the input URL.
+     * 
+     * @param url URL to look for
+     * @return true if exists
+     */
+    boolean hasURL(String url);
     
     /**
      * Checks whether the URL repository is empty.
