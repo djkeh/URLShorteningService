@@ -8,10 +8,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.NONE)
 public class URLRepositoryTest {
     
     @Autowired
@@ -101,5 +102,25 @@ public class URLRepositoryTest {
         
         // Then
         assertThat(size, is(0));
+    }
+
+    @Test
+    public void testHasShortenedURL() throws Exception {
+        // Given
+        
+        // When
+        
+        // Then
+        
+    }
+
+    @Test
+    public void testIsFull() throws Exception {
+        // Given
+        
+        // When
+        
+        // Then
+        
     }
 }

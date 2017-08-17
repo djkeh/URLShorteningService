@@ -33,11 +33,26 @@ public interface URLRepository {
     void init();
     
     /**
+     * Checks if the repository already has shortened URL.
+     * 
+     * @param shortURL shortened URL to look for
+     * @return true if exists
+     */
+    boolean hasShortenedURL(String shortURL);
+    
+    /**
      * Checks whether the URL repository is empty.
      * 
      * @return true if the repository is empty
      */
     boolean isEmpty();
+
+    /**
+     * Checks whether the URL repository is full.
+     * 
+     * @return true if the repository is full and doesn't allow more data input
+     */
+    boolean isFull();
     
     /**
      * Returns the number of stored URL entities in the URL repository.
