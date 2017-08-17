@@ -70,7 +70,7 @@ public class URLShorteningServiceTest {
         
         assertThat(httpsResult.startsWith(prefix), is(true));
         assertThat(httpsResult.substring(prefix.length()).length(), is(8));
-        assertThat(urlShorteningService.restoreURL(httpsResult), is("https://" + noSchemeURL));
+        assertThat(urlShorteningService.restoreURL(httpsResult), is(httpsURL));
         
     }
     
