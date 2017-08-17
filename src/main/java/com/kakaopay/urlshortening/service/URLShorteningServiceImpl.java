@@ -13,7 +13,8 @@ import com.kakaopay.urlshortening.utils.Base62Codec;
 public class URLShorteningServiceImpl implements URLShorteningService {
 
     private static final String SHORT_URL_PREFIX = "http://kakao.pay/";
-    private static final String HTTP_DEFAULT_SCHEME = "http://";
+    private static final String HTTP_SCHEME = "http://";
+    private static final String HTTPS_SCHEME = "https://";
     
     private final URLRepository urlRepository;
     private final Base62Codec base62Codec;
@@ -32,8 +33,8 @@ public class URLShorteningServiceImpl implements URLShorteningService {
         }
         
         url = url.trim();
-        if (!url.startsWith(HTTP_DEFAULT_SCHEME)) {
-            url = HTTP_DEFAULT_SCHEME + url;
+        if (!url.startsWith(HTTP_SCHEME) && !url.startsWith(HTTPS_SCHEME)) {
+            url = HTTP_SCHEME + url;
         }
         
         if (urlRepository.hasURL(url)) {
