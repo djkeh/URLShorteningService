@@ -6,9 +6,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kakaopay.urlshortening.service.URLShorteningService;
+
 
 @Controller
 public class MainController {
+    
+    private final URLShorteningService urlShorteningService;
+    
+    public MainController(URLShorteningService urlShorteningService) {
+        this.urlShorteningService = urlShorteningService;
+    }
 
     @GetMapping("/")
     public String main() {
@@ -20,31 +28,14 @@ public class MainController {
             @RequestParam String url,
             Model model
             ) {
-        if(isShortenedURL(url)) {
-            String redirectURL = getFullURL(url);
+        if(urlShorteningService.isShortenedURL(url)) {
+            String redirectURL = urlShorteningService.restoreURL(url);
             return "redirect:" + redirectURL;
         }
         
-        model.addAttribute("url", getShortenedURL(url));
+        model.addAttribute("url", urlShorteningService.shortenURL(url));
         
         return "index";
     }
-
-    private String getShortenedURL(String url) {
-        if(url.equals("http://test-url.com/")) return "http://kakao.pay/test_URL";
-        return url;
-    }
-
-    private String getFullURL(String url) {
-        if(url == null) return null;
-        if(url.equals("http://kakao.pay/test_URL")) return "http://test-url.com/";
-        else return url;
-    }
-
-    private boolean isShortenedURL(String url) {
-        if(url.equals("http://kakao.pay/test_URL")) return true;
-        return false;
-    }
-    
     
 }

@@ -1,6 +1,7 @@
 package com.kakaopay.urlshortening.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -12,8 +13,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import com.kakaopay.urlshortening.service.URLShorteningService;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(MainController.class)
@@ -21,6 +25,9 @@ public class MainControllerTest {
     
     @Autowired
     private MockMvc mockMvc;
+    
+    @MockBean
+    private URLShorteningService urlShorteningService;
     
     private String navbarBrand;
     private String paramURL;
@@ -60,7 +67,11 @@ public class MainControllerTest {
     public void ShortenURLRequest() throws Exception {
         // Given
         
-        // When & Then
+        // When
+        when(urlShorteningService.isShortenedURL(testURL)).thenReturn(false);
+        when(urlShorteningService.shortenURL(testURL)).thenReturn(testShortenedURL);
+        
+        // Then
         mockMvc.perform(post("/").param(paramURL, testURL))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -77,7 +88,11 @@ public class MainControllerTest {
     public void redirectShortenedURLRequest() throws Exception {
         // Given
         
-        // When & Then
+        // When
+        when(urlShorteningService.isShortenedURL(testShortenedURL)).thenReturn(true);
+        when(urlShorteningService.restoreURL(testShortenedURL)).thenReturn(testURL);
+        
+        // Then
         mockMvc.perform(post("/").param(paramURL, testShortenedURL))
                 .andDo(print())
                 .andExpect(status().isFound());

@@ -2,6 +2,7 @@
 
 <thlogic>
 <!--
+  <attr sel="#th-navbar-brand" th:text="'URL Shortening Sevice : Demo'">
   <attr sel="#th-shortened-url" th:if="${url}">
     <attr sel="/div[1]">
       <attr sel="/.well" th:text="${url}" />
