@@ -5,6 +5,11 @@ management:
   security:
     enabled: false
 
+## Logging
+logging:
+  level: { com: DEBUG }
+
+## Spring properties
 spring:
   ## Thymeleaf 3
   thymeleaf:

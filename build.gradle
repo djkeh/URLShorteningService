@@ -24,6 +24,7 @@ repositories {
 
 configurations {
     providedRuntime
+    compile.exclude module: 'spring-boot-starter-logging'
 }
 
 dependencies {
@@ -34,6 +35,8 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.thymeleaf:thymeleaf:3.0.7.RELEASE')
     compile('org.thymeleaf:thymeleaf-spring4:3.0.7.RELEASE')
+    compile('org.springframework.boot:spring-boot-starter-log4j2')
+    compile('org.apache.commons:commons-lang3:3.6')
     runtime('org.springframework.boot:spring-boot-devtools')
     compileOnly('org.springframework.boot:spring-boot-configuration-processor')
     compileOnly('org.projectlombok:lombok')
