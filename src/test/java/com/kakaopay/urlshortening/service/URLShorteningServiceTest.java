@@ -48,7 +48,7 @@ public class URLShorteningServiceTest {
         
         // Then
         assertThat(result, containsString(prefix));
-        assertThat(result.substring(prefix.length()).length(), lessThanOrEqualTo(8));
+        assertThat(result.substring(prefix.length()).length(), is(8));
     }
     
     @Test
