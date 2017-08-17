@@ -44,16 +44,19 @@ public class URLShorteningServiceImpl implements URLShorteningService {
     }
 
     @Override
-    public String restoreURL(String url) {
-        if(url == null) return null;
-        if(url.equals("http://kakao.pay/test_URL")) return "http://test-url.com/";
-        else return url;
+    public String restoreURL(String shortURL) {
+        if(urlRepository.isEmpty() || shortURL == null) {
+            return shortURL;
+        }
+        
+        String url = urlRepository.getURL(shortURL);
+        
+        return url.equals("") ? shortURL : url;
     }
 
     @Override
     public boolean isShortenedURL(String url) {
-        if(url.equals("http://kakao.pay/test_URL")) return true;
-        return false;
+        return url.contains(SHORT_URL_PREFIX);
     }
     
     private long indexGenerator() {
