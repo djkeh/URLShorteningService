@@ -33,10 +33,20 @@ public class URLRepositoryImpl implements URLRepository {
     public void init() {
         map.clear();
     }
+    
+    @Override
+    public boolean hasShortenedURL(String shortURL) {
+        return map.containsKey(shortURL);
+    }
 
     @Override
     public boolean isEmpty() {
         return map.isEmpty();
+    }
+    
+    @Override
+    public boolean isFull() {
+        return map.size() == Integer.MAX_VALUE ? true : false;
     }
 
     @Override
