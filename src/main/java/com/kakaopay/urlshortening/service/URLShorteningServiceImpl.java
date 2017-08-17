@@ -2,6 +2,7 @@ package com.kakaopay.urlshortening.service;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class URLShorteningServiceImpl implements URLShorteningService {
 
     @Override
     public String shortenURL(String url) {
-        if (urlRepository.isFull() || url == null) {
+        if (urlRepository.isFull() || StringUtils.isBlank(url)) {
             return url;
         }
         
@@ -50,7 +51,7 @@ public class URLShorteningServiceImpl implements URLShorteningService {
 
     @Override
     public String restoreURL(String shortURL) {
-        if(urlRepository.isEmpty() || shortURL == null) {
+        if(urlRepository.isEmpty() || StringUtils.isBlank(shortURL)) {
             return shortURL;
         }
         

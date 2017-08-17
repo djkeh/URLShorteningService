@@ -43,6 +43,8 @@ public class URLShorteningServiceTest {
     public void shortenURL() throws Exception {
         // Given
         when(urlRepository.putURL(anyString(), eq(url))).thenReturn(true);
+        when(urlRepository.hasURL(url)).thenReturn(true);
+        when(urlRepository.getShortURL(url)).thenReturn(shortURL);
         
         // When
         String result1 = urlShorteningService.shortenURL(url);
