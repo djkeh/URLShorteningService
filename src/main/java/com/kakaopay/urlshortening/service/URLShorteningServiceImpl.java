@@ -4,6 +4,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.kakaopay.urlshortening.repository.URLRepository;
@@ -26,6 +27,7 @@ public class URLShorteningServiceImpl implements URLShorteningService {
         this.logger = logger; 
     }
 
+    @Cacheable("url")
     @Override
     public String shortenURL(String url) {
         if (urlRepository.isFull() || StringUtils.isBlank(url)) {
@@ -43,7 +45,6 @@ public class URLShorteningServiceImpl implements URLShorteningService {
         
         long index;
         String shortURL;
-        
         
         do {
             index = indexGenerator();
