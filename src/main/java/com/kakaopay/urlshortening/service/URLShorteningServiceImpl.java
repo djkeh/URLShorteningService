@@ -74,11 +74,15 @@ public class URLShorteningServiceImpl implements URLShorteningService {
         return url.contains(SHORT_URL_PREFIX);
     }
     
+    /**
+     * Generates index number between Base62 code "10000000" ~ "ZZZZZZZZ"<br>
+     * This can generate up to 214818490978688 index numbers.
+     * 
+     * @return generated index number in certain range
+     */
     private long indexGenerator() {
         long index = 0L;
         
-        // Generates index number between Base64 code "10000000" ~ "ZZZZZZZZ"
-        // This can generate up to 214818490978688 index numbers.
         index = ThreadLocalRandom.current().nextLong(3521614606208L, 218340105584895L);
         logger.debug("[Generated ID] {}", index);
         
