@@ -3,10 +3,11 @@ package com.kakaopay.urlshortening.repository;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -15,14 +16,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 public class URLRepositoryTest {
     
-    @Autowired
     private URLRepository urlRepository;
     
     private String testURL;
     private String testShortURL;
+    private int testMaxSize;
 
     @Before
     public void setUp() throws Exception {
+        testMaxSize = 5;
+        urlRepository = new URLRepositoryImpl(new HashMap<>(), testMaxSize);
         testURL = "http://test-url.com/";
         testShortURL = "http://kakao.pay/test_URL";
     }
@@ -93,30 +96,6 @@ public class URLRepositoryTest {
         assertThat(urlRepository.size(), is(0));
         
     }
-    
-    @Test
-    public void testIsEmpty() throws Exception {
-        // Given
-        urlRepository.init();
-        
-        // When
-        boolean empty = urlRepository.isEmpty();
-        
-        // Then
-        assertThat(empty & urlRepository.size() == 0, is(true));
-    }
-
-    @Test
-    public void testSize() throws Exception {
-        // Given
-        urlRepository.init();
-        
-        // When
-        int size = urlRepository.size();
-        
-        // Then
-        assertThat(size, is(0));
-    }
 
     @Test
     public void testHasShortenedURL() throws Exception {
@@ -144,22 +123,53 @@ public class URLRepositoryTest {
         // Then
         assertThat(result, is(true));
     }
+    
+    @Test
+    public void testIsEmpty() throws Exception {
+        // Given
+        urlRepository.init();
+        
+        // When
+        boolean empty = urlRepository.isEmpty();
+        
+        // Then
+        assertThat(empty & urlRepository.size() == 0, is(true));
+    }
 
     @Test
     public void testIsFull() throws Exception {
         // Given
-        /*
-        // TODO: This is crazy! 
-        for (int i = 0; i < Integer.MAX_VALUE; ++i) {
+        for (int i = 0; i < urlRepository.getMaxSize(); ++i) {
             urlRepository.putURL("dummy" + i, "dummy");
         }
-        */
         
         // When
         boolean result = urlRepository.isFull();
         
         // Then
-        //assertThat(result, is(true));
-        assertThat(result, is(false));
+        assertThat(result, is(true));
+    }
+    
+    @Test
+    public void testSize() throws Exception {
+        // Given
+        urlRepository.init();
+        
+        // When
+        int size = urlRepository.size();
+        
+        // Then
+        assertThat(size, is(0));
+    }
+    
+    @Test
+    public void testGetMaxSize() throws Exception {
+        // Given
+        
+        // When
+        int maxSize = urlRepository.getMaxSize();
+        
+        // Then
+        assertThat(maxSize, is(testMaxSize));
     }
 }
