@@ -4,6 +4,12 @@
 management:
   security:
     enabled: false
+endpoints:
+  docs:
+    enabled: true
+  hypermedia:
+    enabled: true
+
 
 ## Logging
 logging:
