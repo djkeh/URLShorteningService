@@ -8,6 +8,7 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -16,7 +17,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 public class URLRepositoryTest {
     
-    private URLRepository urlRepository;
+    @Autowired
+    private URLRepository beanURLRepository;
+    
+    private URLRepository testURLRepository;
     
     private String testURL;
     private String testShortURL;
@@ -25,7 +29,7 @@ public class URLRepositoryTest {
     @Before
     public void setUp() throws Exception {
         testMaxSize = 5;
-        urlRepository = new URLRepositoryImpl(new HashMap<>(), testMaxSize);
+        testURLRepository = new URLRepositoryImpl(new HashMap<>(), testMaxSize);
         testURL = "http://test-url.com/";
         testShortURL = "http://kakao.pay/test_URL";
     }
@@ -33,11 +37,11 @@ public class URLRepositoryTest {
     @Test
     public void testGetUrl() throws Exception {
         // Given
-        urlRepository.init();
-        urlRepository.putURL(testShortURL, testURL);
+        testURLRepository.init();
+        testURLRepository.putURL(testShortURL, testURL);
         
         // When
-        String actualURL = urlRepository.getURL(testShortURL);
+        String actualURL = testURLRepository.getURL(testShortURL);
         
         // Then
         assertThat(actualURL, is(testURL));
@@ -46,11 +50,11 @@ public class URLRepositoryTest {
     @Test
     public void testGetShortURL() throws Exception {
         // Given
-        urlRepository.init();
-        urlRepository.putURL(testShortURL, testURL);
+        testURLRepository.init();
+        testURLRepository.putURL(testShortURL, testURL);
         
         // When
-        String acturlShortURL = urlRepository.getShortURL(testURL);
+        String acturlShortURL = testURLRepository.getShortURL(testURL);
         
         // Then
         assertThat(acturlShortURL, is(testShortURL));
@@ -59,30 +63,30 @@ public class URLRepositoryTest {
     @Test
     public void testPutUrl() throws Exception {
         // Given
-        urlRepository.init();
-        int count = urlRepository.size();
+        testURLRepository.init();
+        int count = testURLRepository.size();
         
         // When
-        boolean putResult = urlRepository.putURL(testShortURL, testURL);
+        boolean putResult = testURLRepository.putURL(testShortURL, testURL);
         
         // Then
         assertThat(putResult, is(true));
-        assertThat(urlRepository.size(), is(count + 1));
+        assertThat(testURLRepository.size(), is(count + 1));
     }
 
     @Test
     public void testRemoveURL() throws Exception {
         // Given
-        urlRepository.putURL(testShortURL, testURL);
-        int size = urlRepository.size();
+        testURLRepository.putURL(testShortURL, testURL);
+        int size = testURLRepository.size();
         
         // When
-        boolean removeResult = urlRepository.removeURL(testShortURL);
+        boolean removeResult = testURLRepository.removeURL(testShortURL);
         
         // Then
         assertThat(removeResult, is(true));
-        assertThat(urlRepository.getURL(testShortURL), is(""));
-        assertThat(urlRepository.size(), is(size - 1));
+        assertThat(testURLRepository.getURL(testShortURL), is(""));
+        assertThat(testURLRepository.size(), is(size - 1));
     }
     
     @Test
@@ -90,21 +94,21 @@ public class URLRepositoryTest {
         // Given
         
         // When
-        urlRepository.init();
+        testURLRepository.init();
         
         // Then
-        assertThat(urlRepository.size(), is(0));
+        assertThat(testURLRepository.size(), is(0));
         
     }
 
     @Test
     public void testHasShortenedURL() throws Exception {
         // Given
-        urlRepository.putURL(testShortURL, testURL);
+        testURLRepository.putURL(testShortURL, testURL);
         
         // When
-        boolean result1 = urlRepository.hasShortenedURL(testShortURL);
-        boolean result2 = urlRepository.hasShortenedURL("false test");
+        boolean result1 = testURLRepository.hasShortenedURL(testShortURL);
+        boolean result2 = testURLRepository.hasShortenedURL("false test");
         
         // Then
         assertThat(result1, is(true));
@@ -115,10 +119,10 @@ public class URLRepositoryTest {
     @Test
     public void testHasURL() throws Exception {
         // Given
-        urlRepository.putURL(testShortURL, testURL);
+        testURLRepository.putURL(testShortURL, testURL);
         
         // When
-        boolean result = urlRepository.hasURL(testURL);
+        boolean result = testURLRepository.hasURL(testURL);
         
         // Then
         assertThat(result, is(true));
@@ -127,24 +131,24 @@ public class URLRepositoryTest {
     @Test
     public void testIsEmpty() throws Exception {
         // Given
-        urlRepository.init();
+        testURLRepository.init();
         
         // When
-        boolean empty = urlRepository.isEmpty();
+        boolean empty = testURLRepository.isEmpty();
         
         // Then
-        assertThat(empty & urlRepository.size() == 0, is(true));
+        assertThat(empty & testURLRepository.size() == 0, is(true));
     }
 
     @Test
     public void testIsFull() throws Exception {
         // Given
-        for (int i = 0; i < urlRepository.getMaxSize(); ++i) {
-            urlRepository.putURL("dummy" + i, "dummy");
+        for (int i = 0; i < testURLRepository.getMaxSize(); ++i) {
+            testURLRepository.putURL("dummy" + i, "dummy");
         }
         
         // When
-        boolean result = urlRepository.isFull();
+        boolean result = testURLRepository.isFull();
         
         // Then
         assertThat(result, is(true));
@@ -153,10 +157,10 @@ public class URLRepositoryTest {
     @Test
     public void testSize() throws Exception {
         // Given
-        urlRepository.init();
+        testURLRepository.init();
         
         // When
-        int size = urlRepository.size();
+        int size = testURLRepository.size();
         
         // Then
         assertThat(size, is(0));
@@ -167,9 +171,11 @@ public class URLRepositoryTest {
         // Given
         
         // When
-        int maxSize = urlRepository.getMaxSize();
+        int maxBeanSize = beanURLRepository.getMaxSize();
+        int maxTestSize = testURLRepository.getMaxSize();
         
         // Then
-        assertThat(maxSize, is(testMaxSize));
+        assertThat(maxBeanSize, is(Integer.MAX_VALUE));
+        assertThat(maxTestSize, is(testMaxSize));
     }
 }

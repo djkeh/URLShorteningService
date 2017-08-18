@@ -76,4 +76,12 @@ public interface URLRepository {
      * @return number of URL entities
      */
     int size();
+    
+    /**
+     * Returns the maximum size of repository.
+     * 
+     * @return maximum available size of the repository.
+     */
+    int getMaxSize();
+    
 }

@@ -1,18 +1,26 @@
 package com.kakaopay.urlshortening.repository;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class URLRepositoryImpl implements URLRepository {
     
     private final Map<String, String> map;
+    private final int maxSize;
     
-    public URLRepositoryImpl() {
-        map = new HashMap<>();
+    @Autowired
+    public URLRepositoryImpl(Map<String, String> map) {
+        this.map = map;
+        this.maxSize = Integer.MAX_VALUE;
+    }
+
+    public URLRepositoryImpl(Map<String, String> map, int maxSize) {
+        this.map = map;
+        this.maxSize = maxSize;
     }
     
     @Override
@@ -66,12 +74,17 @@ public class URLRepositoryImpl implements URLRepository {
     
     @Override
     public boolean isFull() {
-        return map.size() == Integer.MAX_VALUE ? true : false;
+        return map.size() == maxSize ? true : false;
     }
 
     @Override
     public int size() {
         return map.size();
+    }
+
+    @Override
+    public int getMaxSize() {
+        return maxSize;
     }
 
 }
