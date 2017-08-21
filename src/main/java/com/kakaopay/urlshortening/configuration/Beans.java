@@ -1,5 +1,8 @@
 package com.kakaopay.urlshortening.configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InjectionPoint;
@@ -23,5 +26,10 @@ public class Beans {
     @Bean
     public Base62Codec base62Codec() {
         return new Base62Codec();
+    }
+    
+    @Bean
+    public Map<String, String> map() {
+        return new HashMap<>();
     }
 }

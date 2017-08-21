@@ -4,6 +4,12 @@
 management:
   security:
     enabled: false
+endpoints:
+  docs:
+    enabled: true
+  hypermedia:
+    enabled: true
+
 
 ## Logging
 logging:
@@ -13,5 +19,4 @@ logging:
 spring:
   ## Thymeleaf 3
   thymeleaf:
-    # TODO: Currently(~3.0.7) Thymeleaf Decoupled logic cannot be tested via Spring MockMvc, so abandon this feature. 
-    decoupled-logic: false
+    decoupled-logic: true

@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -17,7 +18,7 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import com.kakaopay.urlshortening.configuration.Thymeleaf3Config.Thymeleaf3Properties;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.NONE)
 public class Thymeleaf3ConfigTest {
     
     @Autowired
