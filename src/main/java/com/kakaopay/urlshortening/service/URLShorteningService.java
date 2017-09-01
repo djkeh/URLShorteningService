@@ -6,7 +6,7 @@ public interface URLShorteningService {
      * Creates shortened URL and store it to the repository.
      * 
      * @param url Original URL as an input
-     * @return Shortened URL, or the input URL if the job fails for some reason
+     * @return Shortened URL, or empty String("") URL if the job fails for some reason
      */
     String shortenURL(String url);
     
@@ -14,7 +14,7 @@ public interface URLShorteningService {
      * Returns restored URL from the shortened URL
      * 
      * @param shortURL Shortened URL as an input
-     * @return Original URL, or the input shortURL if the job fails for some reasion
+     * @return Original URL, or empty String("") if the job fails for some reason
      */
     String restoreURL(String shortURL);
     
