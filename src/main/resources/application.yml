@@ -17,6 +17,8 @@ logging:
 
 ## Spring properties
 spring:
+  application.name: url-shortening-service
+
   ## Thymeleaf 3
-  thymeleaf:
+  thymeleaf3:
     decoupled-logic: true

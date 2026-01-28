@@ -1,19 +1,16 @@
 package com.kakaopay.urlshortening.repository;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.HashMap;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 public class URLRepositoryTest {
     
@@ -26,7 +23,7 @@ public class URLRepositoryTest {
     private String testShortURL;
     private int testMaxSize;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         testMaxSize = 5;
         testURLRepository = new URLRepositoryImpl(new HashMap<>(), testMaxSize);

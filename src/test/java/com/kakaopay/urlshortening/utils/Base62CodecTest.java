@@ -1,17 +1,14 @@
 package com.kakaopay.urlshortening.utils;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 public class Base62CodecTest {
 
@@ -21,7 +18,7 @@ public class Base62CodecTest {
     private String testBase62Code;
     private long testNumber;
     
-    @Before
+    @BeforeEach
     public void setUp() {
         testBase62Code = "abc";
         testNumber = 39134L;
