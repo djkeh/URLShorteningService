@@ -1,19 +1,32 @@
 package com.kakaopay.urlshortening.service;
 
+import com.kakaopay.urlshortening.repository.URLRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.cache.CacheManager;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.times;
 
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 public class URLShorteningServiceTest {
     
     @Autowired
     private URLShorteningService urlShorteningService;
+
+    @MockitoSpyBean
+    private URLRepository urlRepository;
+
+    @Autowired
+    private CacheManager cacheManager;
     
     private String prefix;
     private String url;
@@ -25,7 +38,14 @@ public class URLShorteningServiceTest {
         url = "http://test-url.com/";
         shortURL = "http://kakao.pay/test_URL";
     }
-    
+
+    @AfterEach
+    public void tearDown() throws Exception {
+        urlRepository.init();
+        cacheManager.getCache("url").clear();
+    }
+
+
     @Test
     public void shortenURL() throws Exception {
         // Given
@@ -38,6 +58,7 @@ public class URLShorteningServiceTest {
         assertThat(result1.startsWith(prefix), is(true));
         assertThat(result1.substring(prefix.length()).length(), is(8));
         assertThat(result2, is(result1));
+        then(urlRepository).should(times(1)).putURL(any(), any());
     }
     
     @Test
