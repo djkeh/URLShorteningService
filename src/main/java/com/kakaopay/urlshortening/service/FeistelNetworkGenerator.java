@@ -83,9 +83,9 @@ class FeistelNetworkGenerator implements IndexGeneratorService {
      */
     private long hash(long value, int round) {
         long x = value ^ (round * 0xDEADBEEFL) ^ seed;
-        x = ((x >>> 16) ^ x) * 0x45d9f3bL;
-        x = ((x >>> 16) ^ x) * 0x45d9f3bL;
-        x = (x >>> 16) ^ x;
+        x = ((x >>> 30) ^ x) * 0xbf58476d1ce4e5b9L; // SplitMix64 상수 1
+        x = ((x >>> 27) ^ x) * 0x94d049bb133111ebL; // SplitMix64 상수 2
+        x = (x >>> 31) ^ x;
         return x & sideMask;
     }
 
