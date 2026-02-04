@@ -12,5 +12,6 @@ jobs:
     steps:
       - uses: gitkraken/merge-mate-action/sync@v0.1
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           ai-provider: gitkraken
           ai-api-key: ${{ secrets.GK_AI_PROVISIONER_TOKEN }}
