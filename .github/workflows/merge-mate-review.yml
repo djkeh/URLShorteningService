@@ -29,5 +29,6 @@ jobs:
     steps:
       - uses: gitkraken/merge-mate-action/review@v0.1
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           pr-number: ${{ inputs.pr-number }}
           action: ${{ inputs.action }}
