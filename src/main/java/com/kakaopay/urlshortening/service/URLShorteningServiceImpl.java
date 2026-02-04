@@ -47,7 +47,7 @@ public class URLShorteningServiceImpl implements URLShorteningService {
         String shortURL;
         
         do {
-            index = indexGenerator();
+            index = indexGenerator2();
             shortURL = SHORT_URL_PREFIX + base62Codec.encode(index);
         } while(urlRepository.hasShortenedURL(shortURL) && !urlRepository.isFull());
         
@@ -81,7 +81,7 @@ public class URLShorteningServiceImpl implements URLShorteningService {
      * 
      * @return generated index number in certain range
      */
-    private long indexGenerator() {
+    private long indexGenerator2() {
         long index = 0L;
         
         index = ThreadLocalRandom.current().nextLong(3521614606208L, 218340105584895L);
