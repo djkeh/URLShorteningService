@@ -1,14 +1,11 @@
 package com.kakaopay.urlshortening.service;
 
-import java.util.concurrent.ThreadLocalRandom;
-
+import com.kakaopay.urlshortening.repository.URLRepository;
+import com.kakaopay.urlshortening.utils.Base62Codec;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
-import com.kakaopay.urlshortening.repository.URLRepository;
-import com.kakaopay.urlshortening.utils.Base62Codec;
 
 @Service
 public class URLShorteningServiceImpl implements URLShorteningService {
@@ -16,12 +13,14 @@ public class URLShorteningServiceImpl implements URLShorteningService {
     private static final String SHORT_URL_PREFIX = "http://kakao.pay/";
     private static final String HTTP_SCHEME = "http://";
     private static final String HTTPS_SCHEME = "https://";
-    
+
+    private final IndexGeneratorService indexGeneratorService;
     private final URLRepository urlRepository;
     private final Base62Codec base62Codec;
-    private Logger logger;
+    private final Logger logger;
     
-    public URLShorteningServiceImpl(URLRepository urlRepository, Base62Codec base62Codec, Logger logger) {
+    public URLShorteningServiceImpl(IndexGeneratorService feistelNetworkGenerator, URLRepository urlRepository, Base62Codec base62Codec, Logger logger) {
+        this.indexGeneratorService = feistelNetworkGenerator;
         this.urlRepository = urlRepository;
         this.base62Codec = base62Codec;
         this.logger = logger; 
@@ -47,8 +46,10 @@ public class URLShorteningServiceImpl implements URLShorteningService {
         String shortURL;
         
         do {
-            index = indexGenerator();
+            index = indexGeneratorService.nextValue();
             shortURL = SHORT_URL_PREFIX + base62Codec.encode(index);
+
+            logger.debug("[Generated ID] {}", index);
         } while(urlRepository.hasShortenedURL(shortURL) && !urlRepository.isFull());
         
         urlRepository.putURL(shortURL, url);
@@ -73,21 +74,6 @@ public class URLShorteningServiceImpl implements URLShorteningService {
     @Override
     public boolean isShortenedURL(String url) {
         return url.contains(SHORT_URL_PREFIX);
-    }
-    
-    /**
-     * Generates index number between Base62 code "10000000" ~ "ZZZZZZZZ"<br>
-     * This can generate up to 214818490978688 index numbers.
-     * 
-     * @return generated index number in certain range
-     */
-    private long indexGenerator() {
-        long index = 0L;
-        
-        index = ThreadLocalRandom.current().nextLong(3521614606208L, 218340105584895L);
-        logger.debug("[Generated ID] {}", index);
-        
-        return index;
     }
 
 }
